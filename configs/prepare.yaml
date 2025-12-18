@@ -1,0 +1,18 @@
+Cat_treatment:
+  Hepatomegaly: ['119.35']
+  Ascites: [D-penicillamine, S]
+
+Format_change: 
+N_Days: N_years
+Age: Age_in_years
+
+
+Num_treatment:
+  N_years: Age_in_years
+  Cholesterol: 1000
+  Alk_Phos: 5000
+  SGOT: 500
+
+Columns:
+  Num_cols: [N_years, Age_in_years, Bilirubin, Cholesterol, Albumin, Copper, Alk_Phos, SGOT, Tryglicerides, Platelets, Prothrombin, Stage]
+  Cat_cols: [Drug, Sex, Ascites, Hepatomegaly, Spiders, Edema, Status]
