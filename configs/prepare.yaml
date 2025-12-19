@@ -1,11 +1,12 @@
 Cat_treatment:
   Hepatomegaly: ['119.35']
   Ascites: [D-penicillamine, S]
+  Drug: [Drug]
+  Spiders: [C]
 
 Format_change: 
-N_Days: N_years
-Age: Age_in_years
-
+  N_Days: N_years
+  Age: Age_in_years
 
 Num_treatment:
   N_years: Age_in_years
@@ -16,3 +17,10 @@ Num_treatment:
 Columns:
   Num_cols: [N_years, Age_in_years, Bilirubin, Cholesterol, Albumin, Copper, Alk_Phos, SGOT, Tryglicerides, Platelets, Prothrombin, Stage]
   Cat_cols: [Drug, Sex, Ascites, Hepatomegaly, Spiders, Edema, Status]
+
+Splitting:
+  Validation_size: 0.2
+  Seed: 16
+  Dir_path: data/interim
+  Train_file: train_set.csv
+  Validation_file: validation_set.csv

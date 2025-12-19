@@ -1,0 +1,15 @@
+Columns:
+  Exclude: id
+  Target: Status
+
+Hyperparameters:
+  iterations: 377
+  depth: 3
+  learning_rate: 0.210751086669541
+  border_count: 345
+  cat_features: [Drug, Sex, Ascites, Hepatomegaly, Spiders, Edema]
+  loss_function: Multiclass
+
+Model_save:
+  Root_dir: C:/Users/bradl/Documents/Projets Perso/disease_classification/models
+  Model_name: model.joblib  

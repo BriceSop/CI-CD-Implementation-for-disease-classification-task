@@ -12,6 +12,7 @@ classifiers = [
     
 ]
 dependencies = [
+    "catboost>=1.2.8",
     "ipython",
     "jupyterlab",
     "matplotlib",

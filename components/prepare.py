@@ -1,13 +1,14 @@
 import numpy as np
 import pandas as pd
+from sklearn.model_selection import train_test_split
 
 
 class Preprocessing:
-    def __init__(self,data:pd.DataFrame,cfg:dict):
+    def __init__(self, data: pd.DataFrame, cfg: dict):
         """
         Initialization function of the Preprocessing class.
         
-        Parameters
+        Arguments
         ----------
         data : pd.DataFrame
             Raw data used for preprocessing.
@@ -68,7 +69,7 @@ class Preprocessing:
         pd.DataFrame
             Preprocessed dataframe.
         """
-        for key, val in self.cfg["Num_treatment"]:
+        for key, val in self.cfg['Num_treatment'].items():
             # Treatment for N_years equal to the Age
             if key == 'N_years':
                 self.data[key] = np.where(self.data[key] >= self.data[val], np.nan, self.data[key])
@@ -132,3 +133,25 @@ class Preprocessing:
         self.data = self.data.fillna(value=cat_na)
         
         return self.data
+    
+    def data_splitting(self) -> pd.DataFrame:
+        """
+        Splitting the data.
+        
+        Returns
+        -------
+        train : pd.DataFrame
+            Preprocessed itermediate train dataframe.
+        validation : pd.DataFrame
+            Preprocessed itermediate test dataframe.
+        """
+        # Splitting configuration
+        split_cfg = self.cfg['Splitting']
+
+        # Split
+        train, validation = train_test_split(self.data,
+                                             test_size=split_cfg['Validation_size'],
+                                             random_state=split_cfg['Seed']
+                                            )
+        
+        return train, validation 
