@@ -81,7 +81,7 @@ def save_data_to_csv(data: pd.DataFrame, dir_path: str, filename: str):
     """
     try:
         path = os.path.join(dir_path, filename)
-        data.to_csv(path)
+        data.to_csv(path, index=False)
         return print(f"{filename} Data successfully saved at {dir_path}")
     
     except Exception as e:
@@ -108,7 +108,7 @@ def create_directory(dir_path: str):
         Indicating the location of the created directory.
     """
     try:
-        os.makedirs(dir_path,exist_ok=False)
+        os.makedirs(dir_path,exist_ok=True)
         return print(f"Directory successfully created at {dir_path}")
 
     except Exception as e:

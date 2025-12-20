@@ -1,3 +1,7 @@
+Raw_Data: 
+  Train: data/raw/train.csv
+  Test: data/raw/test.csv
+
 Cat_treatment:
   Hepatomegaly: ['119.35']
   Ascites: [D-penicillamine, S]
@@ -17,6 +21,11 @@ Num_treatment:
 Columns:
   Num_cols: [N_years, Age_in_years, Bilirubin, Cholesterol, Albumin, Copper, Alk_Phos, SGOT, Tryglicerides, Platelets, Prothrombin, Stage]
   Cat_cols: [Drug, Sex, Ascites, Hepatomegaly, Spiders, Edema, Status]
+
+Processed_Data:
+  Dir_path: data/processed
+  Train_file: train.csv
+  Test_file: test.csv
 
 Splitting:
   Validation_size: 0.2

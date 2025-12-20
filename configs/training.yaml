@@ -1,3 +1,5 @@
+Input_Data: 'data/interim/train_set.csv'
+
 Columns:
   Exclude: id
   Target: Status
@@ -8,7 +10,8 @@ Hyperparameters:
   learning_rate: 0.210751086669541
   border_count: 345
   cat_features: [Drug, Sex, Ascites, Hepatomegaly, Spiders, Edema]
-  loss_function: Multiclass
+  allow_writing_files: False
+  loss_function: MultiClass
 
 Model_save:
   Root_dir: C:/Users/bradl/Documents/Projets Perso/disease_classification/models

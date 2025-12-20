@@ -39,5 +39,6 @@ class ModelTrainer:
         model.fit(X,Y,verbose=False)
 
         # Saving the model
-        save_config = self.cfg['Model_save']
-        joblib.dump(model, os.path.join(save_config['Root_dir'], save_config['Model_name']))
+        save_cfg = self.cfg['Model_save']
+        joblib.dump(model, os.path.join(save_cfg['Root_dir'], save_cfg['Model_name']))
+        print(f'Model successfully saved at {save_cfg['Root_dir']}')
