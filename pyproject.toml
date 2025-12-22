@@ -13,9 +13,11 @@ classifiers = [
 ]
 dependencies = [
     "catboost>=1.2.8",
+    "dagshub>=0.6.4",
     "ipython",
     "jupyterlab",
     "matplotlib",
+    "mlflow>=3.8.0",
     "notebook",
     "numpy",
     "pandas",

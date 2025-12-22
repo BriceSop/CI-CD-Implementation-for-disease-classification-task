@@ -11,7 +11,7 @@ class Preprocessing:
         Arguments
         ----------
         data : pd.DataFrame
-            Raw data used for preprocessing.
+            Raw data to preprocess.
         cfg : dict
             Preprocessing configuration.
         """

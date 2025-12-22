@@ -1,5 +1,6 @@
 import os
 
+import joblib
 import pandas as pd
 import yaml
 
@@ -73,16 +74,11 @@ def save_data_to_csv(data: pd.DataFrame, dir_path: str, filename: str):
     Raises
     ------
     e : Exception
-
-    Returns
-    -------
-    Print method
-        Indicating the location of the saved data.
     """
     try:
         path = os.path.join(dir_path, filename)
         data.to_csv(path, index=False)
-        return print(f"{filename} Data successfully saved at {dir_path}")
+        print(f"{filename} Data successfully saved at {dir_path}")
     
     except Exception as e:
         raise e
@@ -101,16 +97,28 @@ def create_directory(dir_path: str):
     Raises
     ------
     e : Exception
-
-    Returns
-    -------
-    Print method
-        Indicating the location of the created directory.
     """
     try:
         os.makedirs(dir_path,exist_ok=True)
-        return print(f"Directory successfully created at {dir_path}")
+        print(f"Directory successfully created at {dir_path}")
 
+    except Exception as e:
+        raise e
+    
+def load_model(filepath: str):
+    """
+    Load the created model stored in a joblib file.
+
+    Returns
+    -------
+    model:
+        Model's artifact.
+    """
+    try:
+        model = joblib.load(filepath)
+        print("Model successfully load")
+        return model
+    
     except Exception as e:
         raise e
 

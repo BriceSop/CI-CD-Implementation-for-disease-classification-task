@@ -1,0 +1,7 @@
+Validation_Data: data/interim/validation_set.csv
+
+Model: models/model.joblib
+
+Columns:
+  Exclude: id
+  Target: Status
