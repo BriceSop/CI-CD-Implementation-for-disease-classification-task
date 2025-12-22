@@ -1,0 +1,9 @@
+Data:
+  Train: data/processed/train.csv
+  Test: data/processed/test.csv
+
+Model: models/model.joblib
+
+Prediction_Save:
+  Dir_path: data/preds
+  File_name: submissions.csv

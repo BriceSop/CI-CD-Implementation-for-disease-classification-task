@@ -1,6 +1,7 @@
 import dagshub
 import mlflow
 from mlflow.models import infer_signature
+import numpy as np
 import pandas as pd
 from sklearn.metrics import log_loss
 
@@ -23,33 +24,38 @@ class ModelEvaluation:
         self.model = model
         self.cfg = cfg
 
-    def predict(self):
+    def predict(self, final_pred: bool = False) -> np.array:
         """
         Initialization function of the Preprocessing class.
         
         Arguments
         ----------
-        data : pd.DataFrame
-            Data used to predict.
+        final_pred : bool
+            Indicates if we use the test set or not.
+        
+        Returns
+        -------
+        Y_pred: pd.array
+            Array that contains probability for each class.
         """
         # Columns configuration
         cols = self.cfg['Columns']
 
         # Preparing the data
-        self.X = self.data.drop(columns=[cols['Exclude'],cols['Target']])
-        self.Y_real = self.data[cols['Target']]
+        if not final_pred:
+            self.X = self.data.drop(columns=[cols['Exclude'],cols['Target']])
+            self.Y_real = self.data[cols['Target']]
+        else:
+            self.X = self.data.drop(columns=[cols['Exclude']])
 
         # Predict
         self.Y_pred = self.model.predict_proba(self.X)
 
+        return self.Y_pred
+
     def eval_metric(self):
         """
         Compute the evaluation metric.
-
-        Arguments
-        ---------
-        data_set : str
-            Set of data used.
 
         Returns
         -------
