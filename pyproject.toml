@@ -23,6 +23,7 @@ dependencies = [
     "pandas",
     "pip",
     "pytest",
+    "pytest-sugar>=1.1.1",
     "python-dotenv",
     "pyyaml>=6.0.3",
     "ruff",

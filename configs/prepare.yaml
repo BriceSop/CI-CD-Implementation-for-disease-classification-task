@@ -3,23 +3,33 @@ Raw_Data:
   Test: data/raw/test.csv
 
 Cat_treatment:
-  Hepatomegaly: ['119.35']
-  Ascites: [D-penicillamine, S]
-  Drug: [Drug]
-  Spiders: [C]
+  Drug: [Placebo, D-penicillamine]
+  Sex: [F, M]
+  Ascites: [Y, N]
+  Hepatomegaly: [Y, N]
+  Spiders: [Y, N]
+  Edema: [Y, N, S]
+  Status: [C, CL, D]
 
 Format_change: 
   N_Days: N_years
   Age: Age_in_years
 
 Num_treatment:
+  Age_in_years: [16, 100]
   N_years: Age_in_years
-  Cholesterol: 1000
-  Alk_Phos: 5000
-  SGOT: 500
+  Bilirubin: [0.1, 50]
+  Cholesterol: [60, 1500]
+  Albumin: [1, 6.5]
+  Copper: [10, 800]
+  Alk_Phos: [20, 6000] 
+  SGOT: [5, 10000]
+  Tryglicerides: [20, 5000]
+  Platelets: [10, 1000]
+  Prothrombin: [8, 70]
 
 Columns:
-  Num_cols: [N_years, Age_in_years, Bilirubin, Cholesterol, Albumin, Copper, Alk_Phos, SGOT, Tryglicerides, Platelets, Prothrombin, Stage]
+  Num_cols: [Bilirubin, Cholesterol, Albumin, Copper, Alk_Phos, SGOT, Tryglicerides, Platelets, Prothrombin]
   Cat_cols: [Drug, Sex, Ascites, Hepatomegaly, Spiders, Edema, Status]
 
 Processed_Data:

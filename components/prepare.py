@@ -4,6 +4,12 @@ from sklearn.model_selection import train_test_split
 
 
 class Preprocessing:
+    """
+    Preprocessing pipeline.
+
+    All transformations are applied in place.
+    Each method mutates self.data, except for the last one, and returns self to allow chaining.
+    """
     def __init__(self, data: pd.DataFrame, cfg: dict):
         """
         Initialization function of the Preprocessing class.
@@ -18,56 +24,54 @@ class Preprocessing:
         self.data = data.copy()
         self.cfg = cfg
 
-    def cat_aberrant_treatment(self) -> pd.DataFrame:
+    def cat_aberrant_treatment(self) -> "Preprocessing":
         """
         Function that converts aberrant values into NaN, for categorical columns.
         
         Returns
         -------
-        pd.DataFrame
-            Preprocessed dataframe.
+        self : Preprocessing
+            The same object, with self.data updated.
         """
-        for key, val in self.cfg['Cat_treatment'].items():
-            # Preparing nan values used to replace aberrant values
-            nan_val = [np.nan]*len(val)
+        for key, values in self.cfg['Cat_treatment'].items():
+            # Collect all the modalities of the column 
+            modalities = self.data[key].dropna().unique().tolist()
 
-            # Pattern dict
-            pattern = dict(zip(val,nan_val))
+            # Checking if there is abnormal values
+            diff = list(set(modalities) - set(values))
 
-            # Replacement
-            self.data[key] = self.data[key].replace(pattern)
+            if len(diff) > 0:
+                # Replacement
+                self.data[key] = self.data[key].replace(diff,np.nan)
         
-        return self.data
+        return self
 
-    def format_change(self) -> pd.DataFrame:
+    def format_change(self) -> "Preprocessing":
         """
         Changing the format of certain columns.
         
         Returns
         -------
-        pd.DataFrame
-            Preprocessed dataframe.
+        self : Preprocessing
+            The same object, with self.data updated.
         """
         for key, val in self.cfg['Format_change'].items():
             # Changing to a yearly format
-            self.data[key] = self.data[key]/365
+            self.data[val] = self.data[key]/365
 
             # Rounding
-            self.data[key] = self.data[key].round(decimals=2)
+            self.data[val] = self.data[val].round(decimals=2)
 
-            # Rename according to new format
-            self.data.rename(columns={key:val},inplace=True)
-
-        return self.data
+        return self
     
-    def num_aberrant_treatment(self) -> pd.DataFrame:
+    def num_aberrant_treatment(self) -> "Preprocessing":
         """
         Function that converts aberrant values into NaN, for numerical columns.
         
         Returns
         -------
-        pd.DataFrame
-            Preprocessed dataframe.
+        self : Preprocessing
+            The same object, with self.data updated.
         """
         for key, val in self.cfg['Num_treatment'].items():
             # Treatment for N_years equal to the Age
@@ -76,48 +80,59 @@ class Preprocessing:
             
             # Treatment for the other numerical columns
             else:
-                self.data[key] = np.where(self.data[key] > val, np.nan, self.data[key])
+                self.data[key] = np.where(self.data[key] < val[0], np.nan, self.data[key])
+                self.data[key] = np.where(self.data[key] > val[1], np.nan, self.data[key])
 
-        return self.data
+        return self
     
-    def outliers_treatment(self) -> pd.DataFrame:
+    def _compute_bounds(self, col) -> int:
         """
-        Function that replace outliers by NaN.
+        Compute IQR-based lower and upper bounds for a numeric column.
+
+        Arguments
+        ---------
+        col: str
+            Column to use for calculation.
+        
+        Return
+        ------
+            Outliers' bounds for the column.
+        """
+        Q1 = self.data[col].quantile(0.25)
+        Q3 = self.data[col].quantile(0.75)
+        IQR = Q3 - Q1
+        return Q1 - 1.5 * IQR, Q3 + 1.5 * IQR
+    
+    def outliers_treatment(self) -> "Preprocessing":
+        """
+        Function that replace outliers by max or min (winsoriztion).
         
         Returns
         -------
-        pd.DataFrame
-            Preprocessed dataframe.
+        self : Preprocessing
+            The same object, with self.data updated.
         """
         # Initialize Columns Names
         num_cols = self.cfg['Columns']
+
         for col in num_cols['Num_cols']:
-
-            # Calculating first and third quartile
-            Q1 = self.data[col].quantile(0.25)
-            Q3 = self.data[col].quantile(0.75)
-
-            # Interquartile Range
-            IQR = Q3 - Q1
-
-            # Outliers' bounds
-            lower_bound = Q1 - 1.5 * IQR
-            upper_bound = Q3 + 1.5 * IQR
+            # Computing Outliers' bounds
+            low, high = self._compute_bounds(col)
 
             # Replacing outliers by NaN
-            self.data[col] = np.where(self.data[col] < lower_bound, np.nan, self.data[col])
-            self.data[col] = np.where(self.data[col] > upper_bound, np.nan, self.data[col])
+            self.data[col] = np.where(self.data[col] < low, low, self.data[col])
+            self.data[col] = np.where(self.data[col] > high, high, self.data[col])
         
-        return self.data
+        return self
     
-    def cat_nan_treatment(self) -> pd.DataFrame:
+    def cat_nan_treatment(self) -> "Preprocessing":
         """
         Function that replace NaN by a new class named Unknown, for categorical columns.
         
         Returns
         -------
-        pd.DataFrame
-            Preprocessed dataframe.
+        self : Preprocessing
+            The same object, with self.data updated.
         """
         # Initialize Columns Names
         cat_cols = self.cfg['Columns']
@@ -130,13 +145,13 @@ class Preprocessing:
             cat_na[col] = "Unknown"
 
         # Replacing NaN by Unknown
-        self.data = self.data.fillna(value=cat_na)
+        self.data[cat_cols['Cat_cols']] = self.data[cat_cols['Cat_cols']].fillna(value=cat_na)
         
-        return self.data
+        return self
     
     def data_splitting(self) -> pd.DataFrame:
         """
-        Splitting the data.
+        Splitting the data into train and validation sets.
         
         Returns
         -------
