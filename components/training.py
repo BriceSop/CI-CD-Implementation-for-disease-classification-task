@@ -20,9 +20,19 @@ class ModelTrainer:
         self.data = data.copy()
         self.cfg = cfg
 
-    def train(self):
+    def train(self, save_model: bool = True):
         """
         Function that train and save the model as a joblib's artefact.
+
+        Arguments
+        ---------
+        save_model : bool
+            Inidcate whether to save the model or not.
+
+        Returns
+        -------
+        model:
+            Trained model's artifact.
         """
         # Columns configuration
         cols = self.cfg['Columns']
@@ -37,8 +47,12 @@ class ModelTrainer:
         # Training
         model = CatBoostClassifier(**params)
         model.fit(X,Y,verbose=False)
+        print('Model successfully trained !')
 
         # Saving the model
-        save_cfg = self.cfg['Model_save']
-        joblib.dump(model, os.path.join(save_cfg['Root_dir'], save_cfg['Model_name']))
-        print(f'Model successfully saved at {save_cfg['Root_dir']}')
+        if save_model:
+            save_cfg = self.cfg['Model_save']
+            joblib.dump(model, os.path.join(save_cfg['Root_dir'], save_cfg['Model_name']))
+            print(f'Model successfully saved at {save_cfg['Root_dir']}')
+
+        return model

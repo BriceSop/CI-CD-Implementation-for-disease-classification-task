@@ -35,8 +35,8 @@ class ModelEvaluation:
         
         Returns
         -------
-        Y_pred: pd.array
-            Array that contains probability for each class.
+        self: ModelEvaluation
+            The same object, with predictions added.
         """
         # Columns configuration
         cols = self.cfg['Columns']
@@ -51,22 +51,22 @@ class ModelEvaluation:
         # Predict
         self.Y_pred = self.model.predict_proba(self.X)
 
-        return self.Y_pred
+        return self
 
-    def eval_metric(self):
+    def eval_metric(self) -> int:
         """
         Compute the evaluation metric.
 
         Returns
         -------
-        metric:
-            Evaluation metric.
+        self: ModelEvaluation
+            The same object, with evaluation metric added.
         """
         # Evaluation metric calculation
         self.metric = log_loss(self.Y_real, self.Y_pred)
         print(f"Evaluation metric: {self.metric}")
 
-        return self.metric
+        return self
 
     def mlflow_tracking(self, model_registry: bool = False):
         """
