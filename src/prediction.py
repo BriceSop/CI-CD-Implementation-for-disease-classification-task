@@ -37,7 +37,7 @@ final_data[['Status C','Status CL','Status D']] = pred
 final_data.head()
 
 # Saving the submission data
-dir_path = pred_config['Inference_Save']['Dir_path']
-file_name = pred_config['Inference_Save']['File_name']
+dir_path = pred_config['Prediction_Save']['Dir_path']
+file_name = pred_config['Prediction_Save']['File_name']
 create_directory(dir_path)
 save_data_to_csv(final_data, dir_path, file_name)

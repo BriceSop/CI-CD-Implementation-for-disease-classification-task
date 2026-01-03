@@ -15,5 +15,5 @@ Hyperparameters:
   allow_writing_files: False
 
 Model_save:
-  Root_dir: C:/Users/bradl/Documents/Projets Perso/disease_classification/models
+  Root_dir: models
   Model_name: model.joblib  

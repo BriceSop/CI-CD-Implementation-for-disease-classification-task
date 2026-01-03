@@ -21,11 +21,11 @@ train_prep.cat_nan_treatment()
 
 # Test data Preprocessing
 test_prep = Preprocessing(test_data, config)
-test_prep.cat_aberrant_treatment()
+test_prep.cat_aberrant_treatment(test_set=True)
 test_prep.format_change()
 test_prep.num_aberrant_treatment()
 test_prep.outliers_treatment()
-test_prep.cat_nan_treatment()
+test_prep.cat_nan_treatment(test_set=True)
 
 # Saving the preprocessed data
 dir_path = config['Processed_Data']['Dir_path']

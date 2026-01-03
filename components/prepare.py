@@ -24,15 +24,24 @@ class Preprocessing:
         self.data = data.copy()
         self.cfg = cfg
 
-    def cat_aberrant_treatment(self) -> "Preprocessing":
+    def cat_aberrant_treatment(self, test_set: bool = False) -> "Preprocessing":
         """
         Function that converts aberrant values into NaN, for categorical columns.
+
+        Arguments
+        ---------
+        test_set : bool
+            Specify whether the data treated is the test set or not.
         
         Returns
         -------
         self : Preprocessing
             The same object, with self.data updated.
         """
+        # Remove Status' treatment for test set
+        if test_set:
+            self.cfg['Cat_treatment'].pop('Status')
+
         for key, values in self.cfg['Cat_treatment'].items():
             # Collect all the modalities of the column 
             modalities = self.data[key].dropna().unique().tolist()
@@ -125,9 +134,14 @@ class Preprocessing:
         
         return self
     
-    def cat_nan_treatment(self) -> "Preprocessing":
+    def cat_nan_treatment(self, test_set: bool = False) -> "Preprocessing":
         """
         Function that replace NaN by a new class named Unknown, for categorical columns.
+
+        Arguments
+        ---------
+        test_set : bool
+            Specify whether the data treated is the test set or not.
         
         Returns
         -------
@@ -139,6 +153,10 @@ class Preprocessing:
 
         # Pattern for replacement
         cat_na = {}
+
+        # Remove Status' treatment for test set
+        if test_set:
+            cat_cols['Cat_cols'].remove('Status')
 
         # Preparing the replacement pattern dictionary
         for col in cat_cols['Cat_cols']:
