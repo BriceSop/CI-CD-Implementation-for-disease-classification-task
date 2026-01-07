@@ -7,8 +7,11 @@ on:
 
 jobs:
 
-  build-image:
+  build-and-push-image:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     outputs:
       image_tag: ${{ steps.meta.outputs.version }}
     steps:
