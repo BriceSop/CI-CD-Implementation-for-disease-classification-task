@@ -25,15 +25,15 @@ jobs:
         id: meta
         run: |
           TAG=${{ github.sha }}
-          docker build -t ghcr.io/BriceSop/disease-classification:$TAG .
-          docker push ghcr.io/BriceSop/disease-classification:$TAG
+          docker build -t ghcr.io/bricesop/disease-classification:$TAG .
+          docker push ghcr.io/bricesop/disease-classification:$TAG
           echo "version=$TAG" >> $GITHUB_OUTPUT
 
   lint-and-tests:
     needs: build-image
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/BriceSop/disease-classification:${{ needs.build-image.outputs.image_tag }}
+      image: ghcr.io/bricesop/disease-classification:${{ needs.build-image.outputs.image_tag }}
     steps:
       - name: Checkout repository code
         uses: actions/checkout@v4
@@ -48,7 +48,7 @@ jobs:
     needs: lint-and-tests
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/BriceSop/disease-classification:${{ needs.build-image.outputs.image_tag }}
+      image: ghcr.io/bricesop/disease-classification:${{ needs.build-image.outputs.image_tag }}
     steps:
       - name: Checkout repository code
         uses: actions/checkout@v4
@@ -60,7 +60,7 @@ jobs:
     needs: preprocess
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/BriceSop/disease-classification:${{ needs.build-image.outputs.image_tag }}
+      image: ghcr.io/bricesop/disease-classification:${{ needs.build-image.outputs.image_tag }}
     steps:
       - name: Checkout repository code
         uses: actions/checkout@v4
@@ -72,7 +72,7 @@ jobs:
     needs: train
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/BriceSop/disease-classification:${{ needs.build-image.outputs.image_tag }}
+      image: ghcr.io/bricesop/disease-classification:${{ needs.build-image.outputs.image_tag }}
     steps:
       - name: Checkout repository code
         uses: actions/checkout@v4
