@@ -22,7 +22,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.GHCR_TOKEN }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build & push image
         id: meta
@@ -36,7 +36,7 @@ jobs:
     needs: build-and-push-image
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/bricesop/disease-classification:${{ needs.build-image.outputs.image_tag }}
+      image: ghcr.io/bricesop/disease-classification:${{ needs.build-and-push-image.outputs.image_tag }}
     steps:
       - name: Checkout repository code
         uses: actions/checkout@v4
@@ -51,7 +51,7 @@ jobs:
     needs: lint-and-tests
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/bricesop/disease-classification:${{ needs.build-image.outputs.image_tag }}
+      image: ghcr.io/bricesop/disease-classification:${{ needs.build-and-push-image.outputs.image_tag }}
     steps:
       - name: Checkout repository code
         uses: actions/checkout@v4
@@ -63,7 +63,7 @@ jobs:
     needs: preprocess
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/bricesop/disease-classification:${{ needs.build-image.outputs.image_tag }}
+      image: ghcr.io/bricesop/disease-classification:${{ needs.build-and-push-image.outputs.image_tag }}
     steps:
       - name: Checkout repository code
         uses: actions/checkout@v4
@@ -75,7 +75,7 @@ jobs:
     needs: train
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/bricesop/disease-classification:${{ needs.build-image.outputs.image_tag }}
+      image: ghcr.io/bricesop/disease-classification:${{ needs.build-and-push-image.outputs.image_tag }}
     steps:
       - name: Checkout repository code
         uses: actions/checkout@v4
