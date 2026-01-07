@@ -38,7 +38,7 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/bricesop/disease-classification:${{ needs.build-and-push-image.outputs.image_tag }}
-      volumes: /data:/app/data
+      volumes: /data
     steps:
       - name: Checkout repository code
         uses: actions/checkout@v4
@@ -56,7 +56,7 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/bricesop/disease-classification:${{ needs.build-and-push-image.outputs.image_tag }}
-      volumes: /data:/app/data
+      volumes: /data
     steps:
       - name: Checkout repository code
         uses: actions/checkout@v4
@@ -71,7 +71,7 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/bricesop/disease-classification:${{ needs.build-and-push-image.outputs.image_tag }}
-      volumes: /data:/app/data
+      volumes: /data
     steps:
       - name: Checkout repository code
         uses: actions/checkout@v4
@@ -86,7 +86,7 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/bricesop/disease-classification:${{ needs.build-and-push-image.outputs.image_tag }}
-      volumes: /data:/app/data
+      volumes: /data
     steps:
       - name: Checkout repository code
         uses: actions/checkout@v4
