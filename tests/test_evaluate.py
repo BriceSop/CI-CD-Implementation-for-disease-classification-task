@@ -45,10 +45,16 @@ def prep():
     return ModelEvaluation(df, model, cfg)
 
 def test_pred_shape(prep):
+    # GIVEN a ModelEvaluation object
+    # WHEN predict is applied
     prep.predict()
+    # THEN predictions has the right shape
     assert prep.Y_pred.shape == (len(prep.data),3)
 
 def test_eval_metric(prep):
+    # GIVEN a ModelEvaluation object
+    # WHEN eval_metric is applied
     prep.predict().eval_metric()
+    # THEN metrics should be between 0 and 1
     assert prep.metric < 1
     assert prep.metric > 0

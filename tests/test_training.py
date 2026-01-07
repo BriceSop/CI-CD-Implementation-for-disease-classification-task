@@ -44,7 +44,10 @@ def prep():
     return ModelTrainer(df, cfg)
 
 def test_model_attr(prep):
+    # GIVEN a ModelTrainer object with data and config dict
+    # WHEN train is applied
     model = prep.train(save_model=False)
+    # THEN model is not empty and has attributes
     assert model is not None
     assert hasattr(model, 'tree_count_')
     assert hasattr(model, 'random_seed_')
@@ -52,12 +55,18 @@ def test_model_attr(prep):
     assert hasattr(model, 'classes_')
 
 def test_model_seed(prep):
+    # GIVEN a ModelTrainer object with data and config dict
+    # WHEN train is applied
     model = prep.train(save_model=False)
     seed = prep.cfg["Hyperparameters"]["random_state"]
+    # THEN model has the right seed specified
     assert model.random_seed_ == seed
 
 def test_model_file(prep, tmp_path):
+    # GIVEN a ModelTrainer object with data and config dict
+    # WHEN train is applied
     prep.cfg['Model_save']['Root_dir'] = tmp_path
     prep.train(save_model=True)
     filepath = os.path.join(tmp_path, prep.cfg['Model_save']['Model_name'])
+    # THEN a file is created to store the model
     assert os.path.exists(filepath)
