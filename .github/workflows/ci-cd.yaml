@@ -33,7 +33,7 @@ jobs:
           echo "version=$TAG" >> $GITHUB_OUTPUT
 
   lint-and-tests:
-    needs: build-image
+    needs: build-and-push-image
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/bricesop/disease-classification:${{ needs.build-image.outputs.image_tag }}
