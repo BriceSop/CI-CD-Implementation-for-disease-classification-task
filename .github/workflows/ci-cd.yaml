@@ -48,7 +48,7 @@ jobs:
         run: pytest
 
   preprocess:
-    needs: lint-and-tests
+    needs: build-and-push-image
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/bricesop/disease-classification:${{ needs.build-and-push-image.outputs.image_tag }}
@@ -60,7 +60,7 @@ jobs:
         run: python src/prepare.py
 
   train:
-    needs: preprocess
+    needs: build-and-push-image
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/bricesop/disease-classification:${{ needs.build-and-push-image.outputs.image_tag }}
@@ -72,7 +72,7 @@ jobs:
         run: python src/training.py
 
   evaluate:
-    needs: train
+    needs: build-and-push-image
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/bricesop/disease-classification:${{ needs.build-and-push-image.outputs.image_tag }}
