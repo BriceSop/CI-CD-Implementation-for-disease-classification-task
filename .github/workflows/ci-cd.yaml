@@ -81,6 +81,10 @@ jobs:
       - build-and-push-image
       - train
     runs-on: ubuntu-latest
+    env:
+      MLFLOW_TRACKING_URI: https://dagshub.com/BriceSop/CI-CD-Implementation-for-disease-classification-task.mlflow
+      MLFLOW_TRACKING_USERNAME: ${{ secrets.DAGSHUB_USERNAME }}
+      MLFLOW_TRACKING_PASSWORD: ${{ secrets.DAGSHUB_TOKEN }}
     container:
       image: ghcr.io/bricesop/disease-classification:${{ needs.build-and-push-image.outputs.image_tag }}
     steps:
