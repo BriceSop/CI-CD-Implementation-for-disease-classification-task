@@ -1,7 +1,5 @@
 # Data
-data/processed/
-data/interim/
-data/preds/
+/data/
 
 # Models
 models/model.joblib
