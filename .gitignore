@@ -1,10 +1,10 @@
 # Data
-/data/processed/
-/data/interim/
-/data/preds/
+data/processed/
+data/interim/
+data/preds/
 
 # Models
-/models/model.joblib
+models/model.joblib
 
 # Mac OS-specific storage files
 .DS_Store
