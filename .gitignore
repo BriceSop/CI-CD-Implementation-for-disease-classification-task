@@ -1,5 +1,6 @@
 # Data
-/data/
+data/raw/train.csv
+data/raw/test.csv
 
 # Models
 models/model.joblib
