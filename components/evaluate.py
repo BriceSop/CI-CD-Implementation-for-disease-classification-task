@@ -77,10 +77,8 @@ class ModelEvaluation:
             model_registry: bool
                 Indicates whether to register the model or not.
             """
-        # Initialize dagshub repository
-        dagshub.init(repo_owner='BriceSop', 
-                     repo_name='CI-CD-Implementation-for-disease-classification-task', 
-                     mlflow=True)
+        # Initialize experiment
+        mlflow.set_experiment("disease-classification")
         
         with mlflow.start_run():
             # Log hyperparameters

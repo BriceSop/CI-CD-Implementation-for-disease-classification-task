@@ -91,6 +91,6 @@ jobs:
       - name: Checkout repository code
         uses: actions/checkout@v4
       
-      - name: Model training
+      - name: Model evaluation
         run: python src/evaluate.py
   
