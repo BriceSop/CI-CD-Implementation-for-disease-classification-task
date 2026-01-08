@@ -126,13 +126,13 @@ jobs:
         run: python src/evaluate.py
   
   deploy:
-  needs: 
+    needs: 
       - build-and-push-image
       - evaluate
-  runs-on: ubuntu-latest
-  container:
+    runs-on: ubuntu-latest
+    container:
       image: ghcr.io/bricesop/disease-classification:${{ needs.build-and-push-image.outputs.image_tag }}
-  steps:
+    steps:
       - name: Checkout repository code
         uses: actions/checkout@v4
 
