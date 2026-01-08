@@ -3,7 +3,6 @@ name: CI/CD pipeline
 on:
   push:
     branches: [main]
-  pull_request:
 
 jobs:
 
@@ -62,6 +61,14 @@ jobs:
       - name: Preprocessing's execution
         run: python src/prepare.py
 
+      - name: Upload processed data
+        uses: actions/upload-artifact@v4
+        with:
+          name: pipeline-data
+          path: | 
+            data/processed
+            data/interim
+
   train:
     needs: 
       - build-and-push-image
@@ -72,9 +79,21 @@ jobs:
     steps:
       - name: Checkout repository code
         uses: actions/checkout@v4
-      
+
+      - name: Download training data
+        uses: actions/download-artifact@v4
+        with:
+          name: pipeline-data
+          path: data
+            
       - name: Model training
         run: python src/training.py
+
+      - name: Upload model's artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: model-joblib
+          path: model    
 
   evaluate:
     needs: 
@@ -91,6 +110,54 @@ jobs:
       - name: Checkout repository code
         uses: actions/checkout@v4
       
+      - name: Download evaluation data
+        uses: actions/download-artifact@v4
+        with:
+          name: pipeline-data
+          path: data
+      
+      - name: Download model's artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: model-joblib
+          path: model
+
       - name: Model evaluation
         run: python src/evaluate.py
   
+  deploy:
+  needs: 
+      - build-and-push-image
+      - evaluate
+  runs-on: ubuntu-latest
+  container:
+      image: ghcr.io/bricesop/disease-classification:${{ needs.build-and-push-image.outputs.image_tag }}
+  steps:
+      - name: Checkout repository code
+        uses: actions/checkout@v4
+
+      - name: Download data
+        uses: actions/download-artifact@v4
+        with:
+          name: pipeline-data
+          path: data
+      
+      - name: Download model's artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: model-joblib
+          path: model
+      
+      - name: Model prediction
+        run: python src/prediction.py
+      
+      - name: Setup AWS CLI
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-3
+      
+      - name: Sync files to S3 bucket
+        run: |
+          aws s3 sync data/preds s3://project-disease-classif --delete
