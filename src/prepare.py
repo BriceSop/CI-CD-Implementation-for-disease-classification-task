@@ -31,6 +31,7 @@ test_prep.cat_nan_treatment(test_set=True)
 dir_path = config['Processed_Data']['Dir_path']
 train_file_name = config['Processed_Data']['Train_file']
 test_file_name = config['Processed_Data']['Test_file']
+create_directory(dir_path)
 save_data_to_csv(train_prep.data, dir_path, train_file_name)
 save_data_to_csv(test_prep.data, dir_path, test_file_name)
 
