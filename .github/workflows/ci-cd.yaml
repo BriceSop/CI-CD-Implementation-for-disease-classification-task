@@ -149,10 +149,10 @@ jobs:
           path: models
       
       - name: Model prediction
-        run: python src/prediction.py
+        run: python src/prediction.py  
       
       - name: Setup AWS CLI
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v5
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
