@@ -30,11 +30,6 @@ jobs:
           docker build -t ghcr.io/bricesop/disease-classification:$TAG .
           docker push ghcr.io/bricesop/disease-classification:$TAG
           echo "version=$TAG" >> $GITHUB_OUTPUT
-        
-      - run: |
-          echo $PATH
-          which dvc || echo "dvc not found"
-          ls /app/.venv/bin | grep dvc || true
 
   lint-and-tests:
     needs: 
@@ -62,6 +57,10 @@ jobs:
     steps:
       - name: Checkout repository code
         uses: actions/checkout@v4
+
+      - name: Pull data
+        run: |
+          dvc pull -r origin
       
       - name: Preprocessing's execution
         run: python src/prepare.py
