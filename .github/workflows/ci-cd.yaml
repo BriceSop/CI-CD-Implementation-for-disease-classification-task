@@ -64,6 +64,7 @@ jobs:
           DAGSHUB_TOKEN: ${{ secrets.DAGSHUB_TOKEN }}
         run: |
           dvc pull -v
+          dvc doctor
       
       - name: Preprocessing's execution
         run: python src/prepare.py
