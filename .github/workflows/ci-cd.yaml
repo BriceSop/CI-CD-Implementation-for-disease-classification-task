@@ -31,9 +31,10 @@ jobs:
           docker push ghcr.io/bricesop/disease-classification:$TAG
           echo "version=$TAG" >> $GITHUB_OUTPUT
         
-      - name: Get data
-        run: |
-          dvc pull -r origin
+      - run: |
+          echo $PATH
+          which dvc || echo "dvc not found"
+          ls /app/.venv/bin | grep dvc || true
 
   lint-and-tests:
     needs: 
