@@ -30,6 +30,10 @@ jobs:
           docker build -t ghcr.io/bricesop/disease-classification:$TAG .
           docker push ghcr.io/bricesop/disease-classification:$TAG
           echo "version=$TAG" >> $GITHUB_OUTPUT
+        
+      - name: Get data
+        run: |
+          dvc pull -r origin
 
   lint-and-tests:
     needs: 
