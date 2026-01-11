@@ -1,4 +1,0 @@
-[core]
-    remote = origin
-['remote "origin"']
-    url = https://dagshub.com/BriceSop/CI-CD-Implementation-for-disease-classification-task.dvc
