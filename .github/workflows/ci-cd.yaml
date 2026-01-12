@@ -63,7 +63,6 @@ jobs:
           DAGSHUB_USER: ${{ secrets.DAGSHUB_USERNAME }}
           DAGSHUB_TOKEN: ${{ secrets.DAGSHUB_TOKEN }}
         run: |
-          dvc doctor
           dvc pull -v
       
       - name: Preprocessing's execution
