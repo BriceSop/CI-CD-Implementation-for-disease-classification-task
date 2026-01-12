@@ -1,61 +1,78 @@
-# Disease Classification
+# Disease Classification – MLOps Project
 
-<a target="_blank" href="https://cookiecutter-data-science.drivendata.org/">
-    <img src="https://img.shields.io/badge/CCDS-Project%20template-328F97?logo=cookiecutter" />
-</a>
+## Project Overview
 
-Classification model for Primary Biliary Cirrhosis disease status, in a CI/CD way
+This project implements an **end-to-end MLOps pipeline** for deploying a **CatBoost-based classification model** that predicts the **clinical status of patients with Primary Biliary Cirrhosis (PBC)**.
+
+The model is trained and evaluated using the **Primary Biliary Cirrhosis dataset from the :contentReference[oaicite:0]{index=0}**, a well-known dataset in medical research.  
+The project follows **industry-grade MLOps best practices**, focusing on reproducibility, automation, scalability, and reliability.
+
+---
+
+## Objectives
+
+- Build a **production-ready ML pipeline**
+- Ensure **experiment reproducibility**
+- Track experiments and models with **MLflow**
+- Version datasets with **DVC**
+- Automate workflows using **GitHub Actions**
+- Enable cloud deployment with **AWS**
+- Enforce code quality via **unit testing**
+
+---
 
 ## Project Organization
 
 ```
-├── LICENSE            <- Open-source license if one is chosen
-├── Makefile           <- Makefile with convenience commands like `make data` or `make train`
-├── README.md          <- The top-level README for developers using this project.
-├── data
-│   ├── external       <- Data from third party sources.
-│   ├── interim        <- Intermediate data that has been transformed.
-│   ├── processed      <- The final, canonical data sets for modeling.
-│   └── raw            <- The original, immutable data dump.
+disease_classification/
+├── components/          # Core ML pipeline logic
+│   ├── prepare.py       # Data preprocessing
+│   ├── training.py      # Model training
+│   └── evaluate.py      # Model evaluation
 │
-├── docs               <- A default mkdocs project; see www.mkdocs.org for details
+├── configs/             # YAML configuration files
+│   ├── prepare.yaml
+│   ├── training.yaml
+│   ├── evaluate.yaml
+│   └── prediction.yaml
 │
-├── models             <- Trained and serialized models, model predictions, or model summaries
+├── data/
+│   └── raw/             # Datasets tracked with DVC
+│       ├── train.csv
+│       ├── test.csv
 │
-├── notebooks          <- Jupyter notebooks. Naming convention is a number (for ordering),
-│                         the creator's initials, and a short `-` delimited description, e.g.
-│                         `1.0-jqp-initial-data-exploration`.
+├── models/              # Saved trained models
 │
-├── pyproject.toml     <- Project configuration file with package metadata for 
-│                         disease_classification and configuration for tools like black
+├── notebooks/
+│   └── Main.ipynb       # EDA and experimentation
 │
-├── references         <- Data dictionaries, manuals, and all other explanatory materials.
+├── src/                 # Executable pipeline scripts
+│   ├── prepare.py
+│   ├── training.py
+│   ├── evaluate.py
+│   └── prediction.py
 │
-├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
-│   └── figures        <- Generated graphics and figures to be used in reporting
+├── tests/               # Unit tests
+│   ├── test_prepare.py
+│   ├── test_training.py
+│   ├── test_evaluate.py
+│   └── test_utils.py
 │
-├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
-│                         generated with `pip freeze > requirements.txt`
+├── utils/               # Shared utilities
+│   └── common.py
 │
-├── setup.cfg          <- Configuration file for flake8
-│
-└── disease_classification   <- Source code for use in this project.
-    │
-    ├── __init__.py             <- Makes disease_classification a Python module
-    │
-    ├── config.py               <- Store useful variables and configuration
-    │
-    ├── dataset.py              <- Scripts to download or generate data
-    │
-    ├── features.py             <- Code to create features for modeling
-    │
-    ├── modeling                
-    │   ├── __init__.py 
-    │   ├── predict.py          <- Code to run model inference with trained models          
-    │   └── train.py            <- Code to train models
-    │
-    └── plots.py                <- Code to create visualizations
+├── dockerfile           # Docker image definition
+├── pyproject.toml       # Project dependencies
+├── uv.lock              # Dependency lock file
+└── README.md
 ```
+
+---
+
+## License
+
+This project is for personal and educational purposes only.
+All rights reserved.
 
 --------
 
