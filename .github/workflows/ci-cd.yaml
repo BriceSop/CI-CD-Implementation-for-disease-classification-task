@@ -60,10 +60,11 @@ jobs:
 
       - name: Pull data
         env:
-          DAGSHUB_USER: ${{ secrets.DAGSHUB_USERNAME }}
-          DAGSHUB_TOKEN: ${{ secrets.DAGSHUB_TOKEN }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.DAGSHUB_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.DAGSHUB_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: us-east-1
         run: |
-          dvc pull -v
+          dvc pull -r origin
       
       - name: Preprocessing's execution
         run: python src/prepare.py
