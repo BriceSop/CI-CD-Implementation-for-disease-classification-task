@@ -4,7 +4,7 @@
 
 This project implements an **end-to-end MLOps pipeline** for deploying a **CatBoost-based classification model** that predicts the **clinical status of patients with Primary Biliary Cirrhosis (PBC)**.
 
-The model is trained and evaluated using the **Primary Biliary Cirrhosis dataset from the :contentReference[oaicite:0]{index=0}**, a well-known dataset in medical research.  
+The model is trained and evaluated using the **Primary Biliary Cirrhosis dataset from**, a well-known dataset in medical research.  
 The project follows **industry-grade MLOps best practices**, focusing on reproducibility, automation, scalability, and reliability.
 
 ---
